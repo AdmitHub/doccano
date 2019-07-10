@@ -5,6 +5,39 @@
 
 doccano is an open source text annotation tool for human. It provides annotation features for text classification, sequence labeling and sequence to sequence. So, you can create labeled data for sentiment analysis, named entity recognition, text summarization and so on. Just create project, upload data and start annotation. You can build dataset in hours.
 
+## Admithub Heroku deployment
+
+```bash
+# a unique name for the heroku app
+export APP_NAME='my-doccano-container'
+
+# create app with container stack
+heroku apps:create $APP_NAME
+heroku stack:set container -a $APP_NAME
+
+# login to registry
+heroku container:login
+
+# build docker container from the root of the git repo
+docker build -t admithub/doccano .
+docker tag admithub/doccano registry.heroku.com/$APP_NAME/web
+
+# push tagged image to Heroku
+docker push registry.heroku.com/$APP_NAME/web
+
+# configure app environment (this can also be done through the Heroku web ui)
+heroku config:set -a $APP_NAME SECRET_KEY=96B3E3A0-D5B2-4633-8BA8-A66E43FC50E3 ALLOW_SIGNUP=True
+
+# add postgres db
+heroku addons:create -a $APP_NAME heroku-postgresql:hobby-basic
+
+# release app
+heroku container:release web -a $APP_NAME
+
+# add admin user by running the following command and answering the prompts
+heroku run -a $APP_NAME python app/manage.py createsuperuser
+```
+
 ## Demo
 
 You can enjoy [annotation demo](http://doccano.herokuapp.com).
