@@ -7,6 +7,7 @@ doccano is an open source text annotation tool for human. It provides annotation
 
 ## Admithub Heroku deployment
 
+### from scratch
 ```bash
 # a unique name for the heroku app
 export APP_NAME='my-doccano-container'
@@ -36,6 +37,19 @@ heroku container:release web -a $APP_NAME
 
 # add admin user by running the following command and answering the prompts
 heroku run -a $APP_NAME python app/manage.py createsuperuser
+```
+
+### deploy a new version
+```bash
+# build docker container from the root of the git repo
+docker build -t admithub/doccano .
+docker tag admithub/doccano registry.heroku.com/$APP_NAME/web
+
+# push tagged image to Heroku
+docker push registry.heroku.com/$APP_NAME/web
+
+# release app
+heroku container:release web -a $APP_NAME
 ```
 
 ## Demo
