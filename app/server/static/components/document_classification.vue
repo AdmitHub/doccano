@@ -78,9 +78,7 @@ export default {
 
   computed: {
     convotext() {
-      console.log("DID THIS RUN??")
       let jsonText = JSON.parse(this.docs[this.pageNumber].text)
-      console.log(jsonText)
       let messages = jsonText.messages
       let messageTexts = []
       for (let m of messages){
