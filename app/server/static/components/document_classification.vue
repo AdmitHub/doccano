@@ -35,13 +35,30 @@ block annotation-area
       hr
       div.content(v-if="docs[pageNumber]")
         //- span.text {{ docs[pageNumber].text }}
-        ul
-          li.content(v-for="line in convotext") {{line}}
+        ul.convo-list
+          li.dialog-text.content(v-for="line in convotext") {{line}}
 </template>
 
 <style scoped>
 hr {
   margin: 0.8rem 0;
+}
+
+.convo-list{
+  list-style: none
+}
+
+.dialog-text {
+  margin: 0px;
+  padding-left: 10px;
+}
+
+.dialog-text:nth-last-child(1) {
+  background-color: rgb(151, 218, 162)
+}
+
+.dialog-text:nth-last-child(2) {
+  background-color: rgb(151, 218, 162)
 }
 
 .card-header-title {
@@ -61,7 +78,9 @@ export default {
 
   computed: {
     convotext() {
+      console.log("DID THIS RUN??")
       let jsonText = JSON.parse(this.docs[this.pageNumber].text)
+      console.log(jsonText)
       let messages = jsonText.messages
       let messageTexts = []
       for (let m of messages){
