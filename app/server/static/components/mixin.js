@@ -52,7 +52,7 @@ export const annotationMixin = {
       searchQuery: '',
       url: '',
       offset: getOffsetFromUrl(window.location.href),
-      picked: 'all',
+      picked: 'active',
       count: 0,
       isMetadataActive: false,
       isAnnotationGuidelineActive: false,

@@ -90,7 +90,6 @@ export default {
         }
         
         messageTexts.push(prefix + m.body)
-        
       }
 
       return messageTexts
